@@ -18,11 +18,14 @@ class ViewController: UIViewController {
     @IBAction func shareTapped(_ sender: Any?) {
         let url = URL(string: "instagram-stories://share")!
         if UIApplication.shared.canOpenURL(url) {
-            let items: [[String: Any]] = [[
-            "com.instagram.sharedSticker.backgroundTopColor": "#000000",
-            "com.instagram.sharedSticker.backgroundBottomColor": "#FFFFFF",
-            "com.instagram.sharedSticker.contentURL": "onefootball"
-            ]]
+            var item: [String: Any] = [
+                "com.instagram.sharedSticker.backgroundTopColor": "#000000",
+                "com.instagram.sharedSticker.backgroundBottomColor": "#FFFFFF",
+            ]
+            if let data = UIImage(named: "image")?.jpegData(compressionQuality: 1) {
+                item["com.instagram.sharedSticker.stickerImage"] = data
+            }
+            let items = [item]
             let options: [UIPasteboard.OptionsKey: Any] = [
                 .expirationDate: Date().addingTimeInterval(60 * 5)
             ]
